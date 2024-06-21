@@ -27,7 +27,7 @@ const Login = () => {
 
     // login API call
     try {
-      const response = await axiosInstance.post("/login", {
+      const response = await axiosInstance.post("https://notes-app-eight-wheat.vercel.app/login", {
         email: email,
         password: password,
       });
