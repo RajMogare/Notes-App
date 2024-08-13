@@ -6,7 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-mongoose.connect(config.connectionString);
+mongoose.connect(process.env.CONNECTIONSTRING);
 
 const User = require("./models/userModel");
 const Note = require("./models/noteModel");
@@ -19,9 +19,6 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*",
-
-    // optionsSuccessStatus: 200,
-    // credentials:true,
   })
 );
 

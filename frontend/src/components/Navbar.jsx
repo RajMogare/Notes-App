@@ -1,43 +1,43 @@
-import React, { useState } from 'react'
-import ProfileInfo from '../components/ProfileInfo.jsx'
-import {useNavigate} from 'react-router-dom'
-import SearchBar from './SearchBar.jsx'
+import React, { useState } from "react";
+import ProfileInfo from "../components/ProfileInfo.jsx";
+import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar.jsx";
 
-const Navbar = ({userInfo, onSearchNote , handleClearSearch}) => {
+const Navbar = ({ userInfo, onSearchNote, handleClearSearch }) => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const[searchQuery,setSearchQuery]=useState("")
+  const navigate = useNavigate();
 
-  const navigate=useNavigate();
-
-  const onLogout=()=>{
+  const onLogout = () => {
     localStorage.clear();
-    navigate("/login")
-  }
-  const handleSeach=()=>{
-    if(searchQuery){
-      onSearchNote(searchQuery)
+    navigate("/login");
+  };
+  const handleSeach = () => {
+    if (searchQuery) {
+      onSearchNote(searchQuery);
     }
-  }
+  };
 
-  const onClearSearch=()=>{
+  const onClearSearch = () => {
     setSearchQuery("");
-    handleClearSearch()
-  }
+    handleClearSearch();
+  };
   return (
-    <div className='bg-white flex items-center justify-between px-6 py-2 drop-shadow'>
-        <h2 className='text-xl font-medium text-black py-2'>Notes</h2>
+    <div className="bg-white flex items-center justify-between px-6 py-2 drop-shadow">
+      <h2 className="text-xl font-medium text-black py-2">Notes</h2>
 
-        <SearchBar value={searchQuery}
-        onChange={({target})=>{
-          setSearchQuery(target.value)
+      <SearchBar
+        value={searchQuery}
+        onChange={({ target }) => {
+          setSearchQuery(target.value);
         }}
         handleSeach={handleSeach}
         onClearSearch={onClearSearch}
-        />
+      />
 
-        <ProfileInfo userInfo={userInfo} onLogout={onLogout}/>
+      <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

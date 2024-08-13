@@ -3,14 +3,14 @@ import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../components/PasswordInput";
 import { validateEmail } from "../utils/helper";
-import  axiosInstance  from "../utils/axiosInstance";
+import axiosInstance from "../utils/axiosInstance";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const Login = () => {
 
       // handle successful login response
       if (response.data && response.data.accessToken) {
-        localStorage.setItem("token", response.data.accessToken)
+        localStorage.setItem("token", response.data.accessToken);
         navigate("/dashboard");
       }
     } catch (error) {
@@ -53,7 +53,7 @@ const Login = () => {
   };
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
 
       <div className="flex items-center justify-center mt-28">
         <div className="w-96 border rounded bg-white px-7 py-10">
