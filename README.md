@@ -12,7 +12,7 @@ A full-stack Notes Application built using the MERN stack (MongoDB, Express.js, 
 
 ## Live Demo
 
-Check out the live version of the project: [Notes Application](https://github.com/RajMogare/Notes-App.git)
+Check out the live version of the project: https://keen-melomakarona-08f738.netlify.app
 
 ## Technologies Used
 
@@ -32,31 +32,29 @@ To run this project locally:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/notes-application.git
-   cd notes-application
-2. **Install Dependencies:**
-   for backend:
+   git clone https://github.com/RajMogare/Notes-App.git
+   
+2. **Install Dependencies for backend:**
    ```bash
      cd backend
      npm install
 
-  for frontend:
+3. **Install Dependencies for frontend:**
    ```bash
     cd frontend
     npm install
 
-  4. **Set up environment variables:**
+4. **Set up environment variables:**
      Create a .env file in the backend directory with the following:
     ```bash
     MONGO_URI=your_mongodb_connection_string
     JWT_SECRET=your_jwt_secret
 
-  5. **Run the application:**
-     For Frontend:
+5. **Run the application For Frontend:**
      ```bash
      npm run dev
 
-     For backend
+6. **Run the application For Backend:**
      ```bash
      npm start
 
