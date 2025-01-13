@@ -3,7 +3,17 @@ import TagInput from "../components/TagInput";
 import { MdClose } from "react-icons/md";
 import axiosInstance from "../utils/axiosInstance";
 
-const AddEditNotes = ({ noteData, type, getAllNotes, onClose, showToastMessage }) => {
+const AddEditNotes = ({
+  noteData,
+  type,
+  getAllNotes,
+  onClose,
+  showToastMessage,
+}) => {
+  const base_url = "http://localhost:8000";
+
+  // const base_url="https://notes-app-fakh.onrender.com";
+
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
   const [tags, setTags] = useState(noteData?.tags || []);
@@ -12,11 +22,10 @@ const AddEditNotes = ({ noteData, type, getAllNotes, onClose, showToastMessage }
 
   const addNewNote = async () => {
     try {
-      const response = await axiosInstance.post("/add-note", {
+      const response = await axiosInstance.post(`${base_url}/add-note`, {
         title,
         content,
         tags,
-        
       });
 
       if (response.data && response.data.note) {
@@ -38,12 +47,14 @@ const AddEditNotes = ({ noteData, type, getAllNotes, onClose, showToastMessage }
   const editNote = async () => {
     const noteId = noteData._id;
     try {
-      const response = await axiosInstance.put(`/edit-note/${noteId}`, {
-        title,
-        content,
-        tags,
-      
-      });
+      const response = await axiosInstance.put(
+        `${base_url}/edit-note/${noteId}`,
+        {
+          title,
+          content,
+          tags,
+        }
+      );
 
       if (response.data && response.data.note) {
         showToastMessage("Note updated successfully");

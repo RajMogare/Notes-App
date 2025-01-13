@@ -9,9 +9,12 @@ import axiosInstance from "../utils/axiosInstance";
 import Toast from "../components/Toast";
 import EmptyCard from "../components/EmptyCard";
 import notes_blue from "../assets/images/notes_blue.png";
-import NoDataImg from "../assets/images/notes_clr.png"
+import NoDataImg from "../assets/images/notes_clr.png";
 
 const Home = () => {
+  const base_url = "http://localhost:8000";
+
+  // const base_url="https://notes-app-fakh.onrender.com";
   const [openAddEditModal, setOpenAddEditModal] = useState({
     isShown: false,
     type: "add",
@@ -54,7 +57,7 @@ const Home = () => {
   // get user info
   const getUserInfo = async () => {
     try {
-      const response = await axiosInstance.get("/get-user");
+      const response = await axiosInstance.get(`${base_url}/get-user`);
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
       }
@@ -76,7 +79,7 @@ const Home = () => {
 
   const getAllNotes = async () => {
     try {
-      const response = await axiosInstance.get("/get-all-notes");
+      const response = await axiosInstance.get(`${base_url}/get-all-notes`);
 
       if (response.data && response.data.notes) {
         setAllNotes(response.data.notes);
@@ -92,7 +95,9 @@ const Home = () => {
     const noteId = data._id;
 
     try {
-      const response = await axiosInstance.delete(`/delete-note/${noteId}`);
+      const response = await axiosInstance.delete(
+        `${base_url}/delete-note/${noteId}`
+      );
 
       if (response.data && !response.data.error) {
         showToastMessage("Note deleted successfully", "delete");
@@ -114,7 +119,7 @@ const Home = () => {
 
   const onSearchNote = async (query) => {
     try {
-      const response = await axiosInstance.get("/search-note", {
+      const response = await axiosInstance.get(`${base_url}/search-note`, {
         params: { query },
       });
 
@@ -127,21 +132,24 @@ const Home = () => {
     }
   };
 
-  const updateIsPinned=async(noteData)=>{
-      const noteId = noteData._id;
-      try {
-        const response = await axiosInstance.put(`/update-note-pinned/${noteId}`, {
-          "isPinned" :!noteId.isPinned,
-        });
-  
-        if (response.data && response.data.note) {
-          showToastMessage("Note updated successfully");
-          getAllNotes();
+  const updateIsPinned = async (noteData) => {
+    const noteId = noteData._id;
+    try {
+      const response = await axiosInstance.put(
+        `${base_url}/update-note-pinned/${noteId}`,
+        {
+          isPinned: !noteData.isPinned,
         }
-      } catch (error) {
-        console.log(error);
+      );
+
+      if (response.data && response.data.note) {
+        showToastMessage("Note updated successfully");
+        getAllNotes();
       }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
   const handleClearSearch = () => {
     setIsSearch(false);
@@ -180,8 +188,12 @@ const Home = () => {
           </div>
         ) : (
           <EmptyCard
-            imgsrc={isSearch ? NoDataImg:notes_blue}
-            message={isSearch ? `Oops! No notes found matching your search` : `Start creating your first note ! Click the 'ADD' button to note down your thoughts, ideas and reminders. Let's get started !`}
+            imgsrc={isSearch ? NoDataImg : notes_blue}
+            message={
+              isSearch
+                ? `Oops! No notes found matching your search`
+                : `Start creating your first note ! Click the 'ADD' button to note down your thoughts, ideas and reminders. Let's get started !`
+            }
           />
         )}
       </div>

@@ -6,6 +6,8 @@ import { validateEmail } from "../utils/helper";
 import axiosInstance from "../utils/axiosInstance";
 
 const Login = () => {
+  const base_url = "http://localhost:8000";
+  // const base_url = "https://notes-app-fakh.onrender.com";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -27,7 +29,7 @@ const Login = () => {
 
     // login API call
     try {
-      const response = await axiosInstance.post("/login", {
+      const response = await axiosInstance.post(`${base_url}/login`, {
         email: email,
         password: password,
       });
@@ -53,7 +55,7 @@ const Login = () => {
   };
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div className="flex items-center justify-center mt-28">
         <div className="w-96 border rounded bg-white px-7 py-10">

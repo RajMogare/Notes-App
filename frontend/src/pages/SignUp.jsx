@@ -1,78 +1,74 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
 import PasswordInput from "../components/PasswordInput";
 import { validateEmail } from "../utils/helper";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 
 const SignUp = () => {
+  const base_url = "http://localhost:8000";
+
+  // const base_url = "https://notes-app-fakh.onrender.com";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const navigate=useNavigate();
-
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    if(!name){
+    if (!name) {
       setError("Please enter your name");
       return;
     }
-    
-    if(!validateEmail(email)){
+
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }
 
-    if(!password){
+    if (!password) {
       setError("Please enter the password");
       return;
     }
 
-    setError('')
+    setError("");
 
     // signup api call
 
-  try {
-    const response = await axiosInstance.post("/create-account", {
-      fullName:name,
-      email: email,
-      password: password,
-    });
+    try {
+      const response = await axiosInstance.post(`${base_url}/create-account`, {
+        fullName: name,
+        email: email,
+        password: password,
+      });
 
-    // handle successful register response
-    if (response.data && response.data.error) {
-      setError(response.data.message)
-      return
-    }
-    if (response.data && response.data.accessToken) {
-        localStorage.setItem("token", response.data.accessToken)
-        navigate("/dashboard")
+      // handle successful register response
+      if (response.data && response.data.error) {
+        setError(response.data.message);
+        return;
       }
+      if (response.data && response.data.accessToken) {
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      // handle login error
 
-  
-  } catch (error) {
-    // handle login error
-
-    if (
-      error.response &&
-      error.response.data &&
-      error.response.data.message
-    ) {
-      setError(error.response.data.message);
-    } else {
-      setError("An unexpected error occured . Please try again...");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occured . Please try again...",error);
+      }
     }
-  }
   };
 
-  
   return (
     <>
-      {/* <Navbar /> */}
-
       <div className="flex items-center justify-center mt-28">
         <div className="w-96 border rounded bg-white px-7 py-10">
           <form onSubmit={handleSignUp}>
